@@ -5,7 +5,7 @@ lapply(rmds, rmarkdown::render)
 
 # output lints
 for (rmdfile in rmds) {
-  lintr::lint(rmdfile)
+  print(lintr::lint(rmdfile))
 }
 
 # expect no lints
