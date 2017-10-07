@@ -3,6 +3,9 @@
 language: R
 sudo: false
 cache: packages
+r_github_packages:
+  - jimhester/lintr
 script: 
   - R -f tests/render_rmds.R
-
+after_success:
+  - Rscript -e 'lintr::lint_package()'
