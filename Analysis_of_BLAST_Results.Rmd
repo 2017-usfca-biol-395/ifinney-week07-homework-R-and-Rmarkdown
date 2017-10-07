@@ -74,7 +74,7 @@ files_to_read_in <- list.files(path = "output/blast",
 
 # We need to create an empty matrix with the right number of columns
 # so that we can rbind() each dataset on to it
-joined_blast_data <- matrix(nrow =0,
+joined_blast_data <- matrix(nrow = 0,
                             ncol = 14)
 
 # now we loop over each of the files in the list and append them
