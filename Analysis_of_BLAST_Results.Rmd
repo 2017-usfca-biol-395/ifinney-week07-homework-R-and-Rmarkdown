@@ -78,7 +78,7 @@ read_blast_output <- function(filename) {
 }
 ```
 
-```{r read-in-data}
+```{r read-in-BLAST-data}
 # this makes a vector of all the BLAST output file names, including
 # the name(s) of the directories they are in
 files_to_read_in <- list.files(path = "output/blast",
@@ -99,15 +99,39 @@ for (filename in files_to_read_in) {
 }
 ```
 
+```{r read-in-metadata-and-join}
+# Next we want to read in the metadata file so we can add that in too
+# This is not a csv file, so we have to use a slightly different syntax
+# here the `sep = "\t"` tells the function that the data are tab-delimited
+# and the `stringsAsFactors = FALSE` tells it not to assume that things are
+# categorical variables
+metadata_in <- read.table(paste0("data/metadata/",
+                                 "fierer_forensic_hand_mouse_SraRunTable.txt"),
+                          sep = "\t",
+                          header = TRUE,
+                          stringsAsFactors = FALSE)
+
+# Finally we use the left_join() function from dplyr to merge or 'join' the
+# combined data and metadata into one big table, so it's easier to work with
+# in R the `by = c("Run_s" = "sample_name")` syntax tells R which columns
+# to match up when joining the datasets together
+joined_blast_data_metadata <- metadata_in %>%
+  left_join(joined_blast_data,
+            by = c("Run_s" = "sample_name"))
+```
+
+
 ```{r histograms}
-# Here we're using the dply piping syntax to pull out a column from the
-# data to make a histogram. We don't need to tell the hist() function
+# Here we're using the dply piping syntax to select a subset of rows matching a
+# criteria we specify (using the filter) function, and then pull out a column
+# from the data to make a histogram. We don't need to tell the hist() function
 # which data to use, because that's piped in, but we do have to give the
 # hist() function the title and axis label we'd like to use for the figure
-joined_blast_data %>%
+joined_blast_data_metadata %>%
+  filter(env_material_s == "sebum") %>%
   pull(pident) %>%
-  hist(main="Percent Identity",
-       xlab="Percent")
+  hist(main = "Percent Identity",
+       xlab = "Percent")
 ```
 
 Don't forget to report what your figures show in words, here in the Results section.
@@ -117,10 +141,11 @@ Don't forget to report what your figures show in words, here in the Results sect
 # sequences for each taxa for each sample. To do that we can use the table()
 # function. We add the kable() function as well (from the tidyr package)
 # in order to format the table nicely when the document is knitted
-kable(table(joined_blast_data$sscinames,
-            joined_blast_data$sample_name))
+kable(table(joined_blast_data_metadata$sscinames,
+            joined_blast_data_metadata$Run_s))
 ```
 
 # Discussion
 
 Add 2-3 paragraphs here interpreting your results and considering future directions one might take in analyzing these data.
+
