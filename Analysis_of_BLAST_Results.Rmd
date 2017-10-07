@@ -23,71 +23,74 @@ library("knitr")
 ```{r make-read-in-data-function}
 # Output format from BLAST is as detailed on:
 # https://www.ncbi.nlm.nih.gov/books/NBK279675/
-# In this case, we used: '10 sscinames std' 
+# In this case, we used: '10 sscinames std'
 # 10 means csv format
 # sscinames means unique Subject Scientific Name(s), separated by a ';'
 # std means the standard set of result columns, which are:
-# 'qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore',
+# 'qseqid sseqid pident length mismatch
+# gapopen qstart qend sstart send evalue bitscore',
 
 
 # this function takes as input a quoted path to a BLAST result file
 # and produces as output a dataframe with proper column headers
-# and the 'qseqid' column split into sample and seq number 
+# and the 'qseqid' column split into sample and seq number
 read_blast_output <- function(filename) {
   data_in <- read.csv(filename,
-                      header = FALSE, # the files don't have column names in them
-                      col.names = c("sscinames", # unique Subject Scientific Name(s)
+                      header = FALSE, # files don't have column names in them
+                      col.names = c("sscinames", # unique Subject Sci Name(s)
                                     "qseqid",    # Query Seq-id
                                     "sseqid",    # Subject Seq-id
-                                    "pident",    # Percentage of identical matches
+                                    "pident",    # Percntge of identical matches
                                     "length",    # Alignment length
                                     "mismatch",  # Number of mismatches
                                     "gapopen",   # Number of gap openings
                                     "qstart",    # Start of alignment in query
                                     "qend",      # End of alignment in query
-                                    "sstart",    # Start of alignment in subject
+                                    "sstart",    # Start of alignment in subj
                                     "send",      # End of alignment in subject
                                     "evalue",    # Expect value
                                     "bitscore"))  # Bit score
-  
-  # Next we want to split the query sequence ID into 
+
+  # Next we want to split the query sequence ID into
   # Sample and Number components so we can group by sample
   # They originally look like "ERR1942280.1"
   # and we want to split that into two columns: "ERR1942280" and "1"
   # we can use the separate() function from the tidyr library to do this
   # Note that we have to double escape the period for this to work
-  # the syntax is 
-  # separate(column_to_separate, c("New_column_name_1", "New_column_name_2"), "seperator")
+  # the syntax is
+  # separate(column_to_separate,
+  # c("New_column_name_1", "New_column_name_2"),
+  # "seperator")
   data_in <- data_in %>%
     separate(qseqid, c("sample_name", "sample_number"), "\\.")
 }
 ```
 
 ```{r read-in-data}
-# this makes a vector of all the BLAST output file names, including 
+# this makes a vector of all the BLAST output file names, including
 # the name(s) of the directories they are in
-files_to_read_in <- list.files(path = "output/blast", 
+files_to_read_in <- list.files(path = "output/blast",
                                full.names = TRUE)
 
 # We need to create an empty matrix with the right number of columns
 # so that we can rbind() each dataset on to it
-joined_blast_data <- matrix(nrow = 0, 
+joined_blast_data <- matrix(nrow = 0,
                             ncol = 14)
 
 # now we loop over each of the files in the list and append them
 # to the bottom of the 'joined_blast_data' object
-# we do this with the rbind() function and the function we 
+# we do this with the rbind() function and the function we
 # made earlier to read in the files, read_blast_output()
 for (filename in files_to_read_in) {
-  joined_blast_data <- rbind(joined_blast_data, 
+  joined_blast_data <- rbind(joined_blast_data,
                              read_blast_output(filename))
 }
 ```
 
 ```{r histograms}
-# Here we're using the dply piping syntax to pull out a column from the 
+# Here we're using the dply piping syntax to pull out a column from the
 # data to make a histogram. We don't need to tell the hist() function
-# which data to use, because that's piped in, but we do have to give the 
+# which data to use, because that's piped in, but we do have to give the
 # hist() function the title and axis label we'd like to use for the figure
 joined_blast_data %>%
   pull(pident) %>%
@@ -96,11 +99,11 @@ joined_blast_data %>%
 ```
 
 ```{r summary-table}
-# Finally, we'd like to be able to make a summary table of the counts of 
-# sequences for each taxa for each sample. To do that we can use the table() 
-# function. We add the kable() function as well (from the tidyr package) in order
-# to format the table nicely when the document is knitted
-kable(table(joined_blast_data$sscinames, 
+# Finally, we'd like to be able to make a summary table of the counts of
+# sequences for each taxa for each sample. To do that we can use the table()
+# function. We add the kable() function as well (from the tidyr package)
+# in order to format the table nicely when the document is knitted
+kable(table(joined_blast_data$sscinames,
             joined_blast_data$sample_name))
 ```
 
