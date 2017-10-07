@@ -91,8 +91,8 @@ for (filename in files_to_read_in) {
 # hist() function the title and axis label we'd like to use for the figure
 joined_blast_data %>%
   pull(pident) %>%
-  hist(main = "Percent Identity",
-       xlab = "Percent")
+  hist(main="Percent Identity",
+       xlab="Percent")
 ```
 
 ```{r summary-table}
@@ -101,6 +101,6 @@ joined_blast_data %>%
 # function. We add the kable() function as well (from the tidyr package) in order
 # to format the table nicely when the document is knitted
 kable(table(joined_blast_data$sscinames, 
-            joined_blast_data$sample_name)
+            joined_blast_data$sample_name))
 ```
 
