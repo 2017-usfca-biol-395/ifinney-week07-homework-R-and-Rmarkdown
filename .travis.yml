@@ -8,4 +8,5 @@ r_github_packages:
 script: 
   - R -f tests/render_rmds.R
 after_success:
-  - Rscript -e 'lintr::lint_package()'
+  - Rscript -e 'lapply(list.files(recursive = TRUE)[grepl(".Rmd$", list.files(recursive = TRUE))], lintr::lint)'
+
