@@ -7,6 +7,4 @@ r_github_packages:
   - jimhester/lintr
 script: 
   - R -f tests/render_rmds.R
-after_success:
-  - Rscript -e 'lintr::lint("Analysis_of_BLAST_Results.Rmd")'
 
