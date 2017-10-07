@@ -5,9 +5,21 @@ date: "October 6, 2017"
 output: github_document
 ---
 
-## Starter file - modify this to complete the assignment
+# Introduction
 
-### You should add add section headers and add additional code chunks and descriptive text as necessary
+Add 1-2 paragraphs here.
+
+# Methods
+
+## Sample origin and sequencing
+
+Add about a paragraph here.
+
+## Computational
+
+And another paragraph or two here.
+
+# Results
 
 ```{r load-libraries, message = FALSE}
 # Be sure to install these packages before running this script
@@ -98,6 +110,8 @@ joined_blast_data %>%
        xlab="Percent")
 ```
 
+Don't forget to report what your figures show in words, here in the Results section.
+
 ```{r summary-table}
 # Finally, we'd like to be able to make a summary table of the counts of
 # sequences for each taxa for each sample. To do that we can use the table()
@@ -107,3 +121,6 @@ kable(table(joined_blast_data$sscinames,
             joined_blast_data$sample_name))
 ```
 
+# Discussion
+
+Add 2-3 paragraphs here interpreting your results and considering future directions one might take in analyzing these data.
