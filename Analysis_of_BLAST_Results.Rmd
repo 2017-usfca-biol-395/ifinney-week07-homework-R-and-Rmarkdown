@@ -197,6 +197,7 @@ ggplot(joined_blast_data_metadata,
 ```
 
 ```{r summary-table}
+**Table 1:**
 joined_blast_data_metadata %>%
   group_by(sscinames) %>%
   count() %>%
