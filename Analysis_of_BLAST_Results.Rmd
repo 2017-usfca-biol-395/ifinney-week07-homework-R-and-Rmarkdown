@@ -138,7 +138,7 @@ joined_blast_data_metadata %>%
 
 Figure 1. Histogram showing the percent identity matches of sebum in male and female subjects.
 
-```{r Dust on Computer Mouse}
+```{r Dust-on-Computer Mouse}
 joined_blast_data_metadata %>%
 filter(env_material_s == "dust") %>%
 filter(sample_type_s == "computer mouse") %>%
@@ -150,7 +150,7 @@ filter(sample_type_s == "computer mouse") %>%
 
 Figure 2. This histogram shows the bacterial percent identity in dust found on computer mice. 
 
-```{r histogram female sebum}
+```{r histogram-female-sebum}
 joined_blast_data_metadata %>%
 filter(env_material_s == "sebum") %>%
 filter(sex_s == "female") %>%
@@ -162,7 +162,7 @@ filter(sex_s == "female") %>%
 
 Figure 3. This graph shows that between the percent bacterial identity of sebum found on both genders, females palms exhibited a very high percentage.
 
-```{r histogram male sebum}
+```{r histogram-male-sebum}
 joined_blast_data_metadata %>%
 filter(env_material_s == "sebum") %>%  
 filter(sex_s == "male") %>%
@@ -174,7 +174,7 @@ filter(sex_s == "male") %>%
 
 Figure 4. This graph shows that among the bacterial identities in the sebum samples taken, male hands had a significantly lower match than that of females. 
 
-```{r sebum sequence length}
+```{r sebum-sequence-length}
 joined_blast_data_metadata %>%
 filter(env_material_s == "sebum") %>%
 filter(length > 150) %>%
@@ -186,6 +186,9 @@ filter(length > 150) %>%
 
 Figure 5. This graph shows the sequence length matches (in bp) on both males and female for sequence lengths over 150.
 
+```{r table-sequence-length}
+
+
 ```{r intro-to-ggplot}
 ggplot(joined_blast_data_metadata,
        aes(x = sex_s,
@@ -194,6 +197,14 @@ ggplot(joined_blast_data_metadata,
 ```
 
 ```{r summary-table}
+joined_blast_data_metadata %>%
+  group_by(sscinames) %>%
+  count() %>%
+  arrange(desc(n)) %>%
+  head(10) %>% 
+  kable(digits = 5)
+```
+
 # Finally, we'd like to be able to make a summary table of the counts of
 # sequences for each taxa for each sample. To do that we can use the table()
 # function. We add the kable() function as well (from the tidyr package)
