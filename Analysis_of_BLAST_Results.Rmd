@@ -30,6 +30,7 @@ And another paragraph or two here.
 library("dplyr")
 library("tidyr")
 library("knitr")
+library("ggplot2")
 ```
 
 ```{r make-read-in-data-function}
@@ -131,10 +132,66 @@ joined_blast_data_metadata %>%
   filter(env_material_s == "sebum") %>%
   pull(pident) %>%
   hist(main = "Percent Identity",
-       xlab = "Percent")
+       xlab = "Percent",
+       col = "lightcoral")
 ```
 
-Don't forget to report what your figures show in words, here in the Results section.
+Figure 1. Histogram showing the percent identity matches of sebum in male and female subjects.
+
+```{r Dust on Computer Mouse}
+joined_blast_data_metadata %>%
+filter(env_material_s == "dust") %>%
+filter(sample_type_s == "computer mouse") %>%
+  pull(pident) %>%
+  hist(main = "Percent Dust Found on Computer Mice",
+       xlab = "Percent",
+       col = "forest green") 
+```
+
+Figure 2. This histogram shows the bacterial percent identity in dust found on computer mice. 
+
+```{r histogram female sebum}
+joined_blast_data_metadata %>%
+filter(env_material_s == "sebum") %>%
+filter(sex_s == "female") %>%
+  pull(pident) %>%
+  hist(main = "Female Percent Identity of Sebum",
+       xlab = "Percent",
+       col = "plum")
+```
+
+Figure 3. This graph shows that between the percent bacterial identity of sebum found on both genders, females palms exhibited a very high percentage.
+
+```{r histogram male sebum}
+joined_blast_data_metadata %>%
+filter(env_material_s == "sebum") %>%  
+filter(sex_s == "male") %>%
+  pull(pident) %>%
+  hist(main = "Male Percent Identity of Sebum",
+       xlab = "Percent",
+       col = "skyblue")
+```
+
+Figure 4. This graph shows that among the bacterial identities in the sebum samples taken, male hands had a significantly lower match than that of females. 
+
+```{r sebum sequence length}
+joined_blast_data_metadata %>%
+filter(env_material_s == "sebum") %>%
+filter(length > 150) %>%
+  pull(length) %>%
+  hist(main = "Sebum Sequence Length",
+       xlab = "sequence length",
+       col = "orange")
+```
+
+Figure 5. This graph shows the sequence length matches (in bp) on both males and female for sequence lengths over 150.
+
+```{r intro-to-ggplot}
+ggplot(joined_blast_data_metadata,
+       aes(x = sex_s,
+           y = length)) +
+  geom_boxplot()
+```
 
 ```{r summary-table}
 # Finally, we'd like to be able to make a summary table of the counts of
@@ -148,4 +205,5 @@ kable(table(joined_blast_data_metadata$sscinames,
 # Discussion
 
 Add 2-3 paragraphs here interpreting your results and considering future directions one might take in analyzing these data.
+
 
