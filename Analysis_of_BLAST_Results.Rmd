@@ -197,7 +197,6 @@ ggplot(joined_blast_data_metadata,
 ```
 
 ```{r summary-table}
-**Table 1:**
 joined_blast_data_metadata %>%
   group_by(sscinames) %>%
   count() %>%
@@ -205,6 +204,8 @@ joined_blast_data_metadata %>%
   head(10) %>% 
   kable(digits = 5)
 ```
+
+Table 1: Table 1 showing the top 10 bacterial identity matches and their corresponding sequence lengths
 
 # Finally, we'd like to be able to make a summary table of the counts of
 # sequences for each taxa for each sample. To do that we can use the table()
