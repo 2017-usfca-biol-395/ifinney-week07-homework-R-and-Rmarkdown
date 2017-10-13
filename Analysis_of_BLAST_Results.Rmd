@@ -13,11 +13,11 @@ This experiment aimed to proved the validity of using bacterial communities on t
 
 ## Sample origin and sequencing
 
-A few different sample studies were preformed on different objects in order to test the accuracy of this hypothetical approach. The first study involved swabbing computer keyboards (25–30 keys per keyboard) as well as swabbing the and the skin on the ventral surface of the distal joint of each fingertip of the owner of the keyboard. Swabbing has been shown to be a suffient method of collecting data. Swabbing this specific area of the body was chosen because the biomass levels on the skin are high enough to get a suffient and equal amount of swabs collected per subject. Another study was to designed to test the survival and matching accuracy of the bacterial communities after an extended period of time. This study essentially split the swab samples and froze half of them, while leaving other half to sit in normal, indoor environmental conditions for up to 14 days. The last study combined these two earlier studies by 
+A few different sample studies were preformed on different objects in order to test the accuracy of this hypothetical approach. The first study involved swabbing computer keyboards (25–30 keys per keyboard) as well as swabbing the and the skin on the ventral surface of the distal joint of each fingertip of the owner of the keyboard. Swabbing has been shown to be a suffient method of collecting data. Swabbing this specific area of the body was chosen because the biomass levels on the skin are high enough to get a suffient and equal amount of swabs collected per subject. Another study was to designed to test the survival and matching accuracy of the bacterial communities after an extended period of time. This study essentially split the swab samples and froze half of them, while leaving other half to sit in normal, indoor environmental conditions for up to 14 days. The last study swabbed both the palms of the hands of different subjects as well as their computer mouse. Their mice had been last touched 12 hours before collection. To sequence this data, scientists used DNA extraction and pyrosequencing via 454 sequencer.
 
 ## Computational
 
-And another paragraph or two here.
+The process to computationally parse and analyze the data gathered was accomplished using a systematic workflow. The metadata set was first downloaded from the NCBI database and 
 
 # Results
 
