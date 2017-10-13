@@ -6,7 +6,7 @@ October 6, 2017
 Introduction
 ============
 
-Add 1-2 paragraphs here.
+This experiment aimed to proved the validity of using bacterial communities on the skin of humans as a form of forensic identification. This experiement was carried out with the use of human subject, single computer keys, and computer mice. Due to the very high diversity of bacterial communities associated with a particular individual, it was hypothesized that scientists could use the residual skin left on certain objects and match it to the individual who made contact with the particular object or surface even if these objects remained untouched by that individual for a significant period of time. Trough the use of high-thoroughput sequencing techniques, this method of identification was proven to be a highly accuracte method.
 
 Methods
 =======
@@ -14,12 +14,12 @@ Methods
 Sample origin and sequencing
 ----------------------------
 
-Add about a paragraph here.
+A few different sample studies were preformed on different objects in order to test the accuracy of this hypothetical approach. The first study involved swabbing computer keyboards (25–30 keys per keyboard) as well as swabbing the and the skin on the ventral surface of the distal joint of each fingertip of the owner of the keyboard. Swabbing has been shown to be a suffient method of collecting data. Swabbing this specific area of the body was chosen because the biomass levels on the skin are high enough to get a suffient and equal amount of swabs collected per subject. Another study was to designed to test the survival and matching accuracy of the bacterial communities after an extended period of time. This study essentially split the swab samples and froze half of them, while leaving other half to sit in normal, indoor environmental conditions for up to 14 days. The last study swabbed both the palms of the hands of different subjects as well as their computer mouse. Their mice had been last touched 12 hours before collection. To sequence this data, scientists used DNA extraction and pyrosequencing via 454 sequencer.
 
 Computational
 -------------
 
-And another paragraph or two here.
+The process to computationally parse and analyze the data that
 
 Results
 =======
@@ -201,7 +201,7 @@ filter(length > 150) %>%
 
 ![](Analysis_of_BLAST_Results_files/figure-markdown_github-ascii_identifiers/sebum-sequence-length-1.png)
 
-Figure 5. This graph shows the sequence length matches (in bp) on both males and female for sequence lengths over 150.
+Figure 5. This graph shows the sequence length matches (in bp) on both males and female hands for sequence lengths over 150.
 
 ``` r
 ggplot(joined_blast_data_metadata,
@@ -236,19 +236,14 @@ joined_blast_data_metadata %>%
 
 Table 1: Table 1 showing the top 10 bacterial identity matches and their corresponding sequence lengths
 
-Finally, we'd like to be able to make a summary table of the counts of
-======================================================================
-
-sequences for each taxa for each sample. To do that we can use the table()
-==========================================================================
-
-function. We add the kable() function as well (from the tidyr package)
-======================================================================
-
-in order to format the table nicely when the document is knitted
-================================================================
-
-kable(table(joined\_blast\_data\_metadata*s**s**c**i**n**a**m**e**s*, *j**o**i**n**e**d*<sub>*b*</sub>*l**a**s**t*<sub>*d*</sub>*a**t**a*<sub>*m*</sub>*e**t**a**d**a**t**a*Run\_s)) \`\`\`
+``` summary
+# Finally, we'd like to be able to make a summary table of the counts of
+# sequences for each taxa for each sample. To do that we can use the table()
+# function. We add the kable() function as well (from the tidyr package)
+# in order to format the table nicely when the document is knitted
+kable(table(joined_blast_data_metadata$sscinames,
+            joined_blast_data_metadata$Run_s))
+```
 
 Discussion
 ==========
