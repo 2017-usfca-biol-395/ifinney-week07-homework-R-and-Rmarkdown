@@ -145,7 +145,7 @@ filter(sample_type_s == "computer mouse") %>%
   pull(pident) %>%
   hist(main = "Percent Dust Found on Computer Mice",
        xlab = "Percent",
-       col = "forest green") 
+       col = "forestgreen")
 ```
 
 Figure 2. This histogram shows the bacterial percent identity in dust found on computer mice. 
@@ -164,7 +164,7 @@ Figure 3. This graph shows that between the percent bacterial identity of sebum 
 
 ```{r histogram-male-sebum}
 joined_blast_data_metadata %>%
-filter(env_material_s == "sebum") %>%  
+filter(env_material_s == "sebum") %>%
 filter(sex_s == "male") %>%
   pull(pident) %>%
   hist(main = "Male Percent Identity of Sebum",
@@ -200,7 +200,7 @@ joined_blast_data_metadata %>%
   group_by(sscinames) %>%
   count() %>%
   arrange(desc(n)) %>%
-  head(10) %>% 
+  head(10) %>%
   kable(digits = 5)
 ```
 
