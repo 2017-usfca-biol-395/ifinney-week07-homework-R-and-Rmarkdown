@@ -1,6 +1,6 @@
 Analysis of BLAST Results
 ================
-Don Francisco
+Isabella Finney
 October 6, 2017
 
 Introduction
@@ -19,7 +19,7 @@ A few different sample studies were preformed on different objects in order to t
 Computational
 -------------
 
-The process to computationally parse and analyze the data that
+The process to computationally parse and analyze the data gathered was accomplished using a systematic workflow. The metadata set was first downloaded from the NCBI database. Then through the creation of a bash fastq processing script, the metadata was thoroughly trimmed and the format was converted to the fasta format. These steps were completed so that the metadata could be processed by BLAST so that the top matches could be identified against GenBank's nucleotide database. Once the matches were made, the data was opened up in RStudio so that exploratory and statisical analysis could be preformed and conclusions could be made to prove the effectiveness of this approach method.
 
 Results
 =======
@@ -212,6 +212,8 @@ ggplot(joined_blast_data_metadata,
 
 ![](Analysis_of_BLAST_Results_files/figure-markdown_github-ascii_identifiers/intro-to-ggplot-1.png)
 
+Figure 6. This plot shows the average sequence length for the bacterial communities found on males, females, and computer mice.
+
 ``` r
 joined_blast_data_metadata %>%
   group_by(sscinames) %>%
@@ -245,7 +247,11 @@ kable(table(joined_blast_data_metadata$sscinames,
             joined_blast_data_metadata$Run_s))
 ```
 
+Table 2: Overall summary showing each taxa and their corresponding sequence counts
+
 Discussion
 ==========
 
-Add 2-3 paragraphs here interpreting your results and considering future directions one might take in analyzing these data.
+The majority of the results were formed through taking smaller sets of the whole metadata and outputting it in the form of histograms. Making different histograms allowed me to get a summarized distribution of whatever variant I chose for each graph. The first graph show the percent identity of bacterial communities from sebum on the hands of both the male and female subjects. This histogram shows that from all the samples collected, the majority of the bacterial taxa were highly matched (with the percentage starting at 80%). The highest percentage peaks were at 100% and 86%. The fact that the majority of matches were at 100% shows that the hypothetical approach this experiement aimed to prove turned out to be highly effective. The peak at about 86% could be considered a small anomaly with a few of the bacterial communities. Just comparing the matches of bacterial communities present within the dust found of computer mice, it was clear that the experiement proved that not only could sebum be used, but also dust is an effective sample to collect and analyze.
+
+In order to further investigate the source of this deiation, I created more histograms which compared the percent identity of bacteria from just females and another from just males. Looking at the histogram for females, it was clear to see that bacteria from female sebum were highly matched to their corresponding subject. This data shows that even after a prolonged period of time, scientists could match bacteria and subject with a high degree of certainty. When examing the results from the sebum on male hands, the histogram shows that there is a concentrated percent identity at about 86%. This explains why the histogram displaying the overall percent identity has concenrated peaks at both 100% and 86%. However, it was interesting to see this deviation of men and women sebum. Some possible eplanations for these differences could be that there are some types of bacteria that aren't as highly dectable on male hands over female ones or that the females in this study had cleaner hands than the males. The plot made in figure 6 lead me to believe that because the average sequence lengths were shorter in males, BLAST had a harder time matching the communities to the database. Investigating this further would defintitely be advised in order to further prove that this approach is a powerful tool to use in forensic science.
