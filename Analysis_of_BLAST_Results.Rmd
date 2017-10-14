@@ -186,9 +186,6 @@ filter(length > 150) %>%
 
 Figure 5. This graph shows the sequence length matches (in bp) on both males and female hands for sequence lengths over 150.
 
-```{r table-sequence-length}
-
-
 ```{r intro-to-ggplot}
 ggplot(joined_blast_data_metadata,
        aes(x = sex_s,
