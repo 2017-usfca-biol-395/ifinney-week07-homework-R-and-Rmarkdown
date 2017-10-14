@@ -206,7 +206,7 @@ joined_blast_data_metadata %>%
 
 Table 1: Table 1 showing the top 10 bacterial identity matches and their corresponding sequence lengths
 
-```{summary-table-of-seq-counts}
+```{r summary-table-of-seq-counts}
 # Finally, we'd like to be able to make a summary table of the counts of
 # sequences for each taxa for each sample. To do that we can use the table()
 # function. We add the kable() function as well (from the tidyr package)
