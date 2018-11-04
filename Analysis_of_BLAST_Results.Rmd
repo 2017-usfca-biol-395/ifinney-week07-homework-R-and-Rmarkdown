@@ -1,23 +1,23 @@
 ---
 title: "Analysis of BLAST Results"
-author: "Don Francisco"
+author: "Isabella Finney"
 date: "October 6, 2017"
 output: github_document
 ---
 
 # Introduction
 
-Add 1-2 paragraphs here.
+  This experiment aimed to proved the validity of using bacterial communities on the skin of humans as a form of forensic identification. This experiement was carried out with the use of human subject, single computer keys, and computer mice. Due to the very high diversity of bacterial communities associated with a particular individual, it was hypothesized that scientists could use the residual skin left on certain objects and match it to the individual who made contact with the particular object or surface even if these objects remained untouched by that individual for a significant period of time. Trough the use of high-thoroughput sequencing techniques, this method of identification was proven to be a highly accuracte method. 
 
 # Methods
 
 ## Sample origin and sequencing
 
-Add about a paragraph here.
+  A few different sample studies were preformed on different objects in order to test the accuracy of this hypothetical approach. The first study involved swabbing computer keyboards (25–30 keys per keyboard) as well as swabbing the and the skin on the ventral surface of the distal joint of each fingertip of the owner of the keyboard. Swabbing has been shown to be a suffient method of collecting data. Swabbing this specific area of the body was chosen because the biomass levels on the skin are high enough to get a suffient and equal amount of swabs collected per subject. Another study was to designed to test the survival and matching accuracy of the bacterial communities after an extended period of time. This study essentially split the swab samples and froze half of them, while leaving other half to sit in normal, indoor environmental conditions for up to 14 days. The last study swabbed both the palms of the hands of different subjects as well as their computer mouse. Their mice had been last touched 12 hours before collection. To sequence this data, scientists used DNA extraction and pyrosequencing via 454 sequencer.
 
 ## Computational
 
-And another paragraph or two here.
+  The process to computationally parse and analyze the data gathered was accomplished using a systematic workflow. The metadata set was first downloaded from the NCBI database. Then through the creation of a bash fastq processing script, the metadata was thoroughly trimmed and the format was converted to the fasta format. These steps were completed so that the metadata could be processed by BLAST so that the top matches could be identified against GenBank's nucleotide database. Once the matches were made, the data was opened up in RStudio so that exploratory and statisical analysis could be preformed and conclusions could be made to prove the effectiveness of this approach method. 
 
 # Results
 
@@ -30,6 +30,7 @@ And another paragraph or two here.
 library("dplyr")
 library("tidyr")
 library("knitr")
+library("ggplot2")
 ```
 
 ```{r make-read-in-data-function}
@@ -131,12 +132,81 @@ joined_blast_data_metadata %>%
   filter(env_material_s == "sebum") %>%
   pull(pident) %>%
   hist(main = "Percent Identity",
-       xlab = "Percent")
+       xlab = "Percent",
+       col = "lightcoral")
 ```
 
-Don't forget to report what your figures show in words, here in the Results section.
+Figure 1. Histogram showing the percent identity matches of sebum in male and female subjects.
+
+```{r Dust-on-Computer Mouse}
+joined_blast_data_metadata %>%
+filter(env_material_s == "dust") %>%
+filter(sample_type_s == "computer mouse") %>%
+  pull(pident) %>%
+  hist(main = "Percent Dust Found on Computer Mice",
+       xlab = "Percent",
+       col = "forestgreen")
+```
+
+Figure 2. This histogram shows the bacterial percent identity in dust found on computer mice. 
+
+```{r histogram-female-sebum}
+joined_blast_data_metadata %>%
+filter(env_material_s == "sebum") %>%
+filter(sex_s == "female") %>%
+  pull(pident) %>%
+  hist(main = "Female Percent Identity of Sebum",
+       xlab = "Percent",
+       col = "plum")
+```
+
+Figure 3. This graph shows that between the percent bacterial identity of sebum found on both genders, females palms exhibited a very high percentage.
+
+```{r histogram-male-sebum}
+joined_blast_data_metadata %>%
+filter(env_material_s == "sebum") %>%
+filter(sex_s == "male") %>%
+  pull(pident) %>%
+  hist(main = "Male Percent Identity of Sebum",
+       xlab = "Percent",
+       col = "skyblue")
+```
+
+Figure 4. This graph shows that among the bacterial identities in the sebum samples taken, male hands had a significantly lower match than that of females. 
+
+```{r sebum-sequence-length}
+joined_blast_data_metadata %>%
+filter(env_material_s == "sebum") %>%
+filter(length > 150) %>%
+  pull(length) %>%
+  hist(main = "Sebum Sequence Length",
+       xlab = "sequence length",
+       col = "orange")
+```
+
+Figure 5. This graph shows the sequence length matches (in bp) on both males and female hands for sequence lengths over 150.
+
+```{r intro-to-ggplot}
+ggplot(joined_blast_data_metadata,
+       aes(x = sex_s,
+           y = length)) +
+  geom_boxplot()
+```
+
+Figure 6. This plot shows the average sequence length for the bacterial communities found on males, females, and computer mice. 
 
 ```{r summary-table}
+joined_blast_data_metadata %>%
+  group_by(sscinames) %>%
+  count() %>%
+  arrange(desc(n)) %>%
+  head(10) %>%
+  kable(digits = 5)
+```
+
+Table 1: Table 1 showing the top 10 bacterial identity matches and their corresponding sequence lengths
+
+```{r summary-table-of-seq-counts}
 # Finally, we'd like to be able to make a summary table of the counts of
 # sequences for each taxa for each sample. To do that we can use the table()
 # function. We add the kable() function as well (from the tidyr package)
@@ -144,8 +214,12 @@ Don't forget to report what your figures show in words, here in the Results sect
 kable(table(joined_blast_data_metadata$sscinames,
             joined_blast_data_metadata$Run_s))
 ```
+Table 2: Overall summary showing each taxa and their corresponding sequence counts
 
 # Discussion
 
-Add 2-3 paragraphs here interpreting your results and considering future directions one might take in analyzing these data.
+  The majority of the results were formed through taking smaller sets of the whole metadata and outputting it in the form of histograms. Making different histograms allowed me to get a summarized distribution of whatever variant I chose for each graph. The first graph show the percent identity of bacterial communities from sebum on the hands of both the male and female subjects. This histogram shows that from all the samples collected, the majority of the bacterial taxa were highly matched (with the percentage starting at 80%). The highest percentage peaks were at 100% and 86%. The fact that the majority of matches were at 100% shows that the hypothetical approach this experiement aimed to prove turned out to be highly effective. The peak at about 86% could be considered a small anomaly with a few of the bacterial communities. Just comparing the matches of bacterial communities present within the dust found of computer mice, it was clear that the experiement proved that not only could sebum be used, but also dust is an effective sample to collect and analyze. 
+  
+  In order to further investigate the source of this deiation, I created more histograms which compared the percent identity of bacteria from just females and another from just males. Looking at the histogram for females, it was clear to see that bacteria from female sebum were highly matched to their corresponding subject. This data shows that even after a prolonged period of time, scientists could match bacteria and subject with a high degree of certainty. When examing the results from the sebum on male hands, the histogram shows that there is a concentrated percent identity at about 86%. This explains why the histogram displaying the overall percent identity has concenrated peaks at both 100% and 86%. However, it was interesting to see this deviation of men and women sebum. Some possible eplanations for these differences could be that there are some types of bacteria that aren't as highly dectable on male hands over female ones or that the females in this study had cleaner hands than the males. The plot made in figure 6 lead me to believe that because the average sequence lengths were shorter in males, BLAST had a harder time matching the communities to the database. Investigating this further would defintitely be advised in order to further prove that this approach is a powerful tool to use in forensic science.
+
 
